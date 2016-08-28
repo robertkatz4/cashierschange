@@ -1,152 +1,134 @@
-#	Its the program most ppl start with when learning a language. Computes change. So like this: prompt the user for cost of item. Prompt user the amt of money. Should output the money to pay the person.
-# 1. Cost of item? 6.25 2. How much are you giving the cashier? 10.00. 3. Return: "pay the person 3.75"
-#	The 2nd part is to compute the proper bill breakdown.  Dont tell the cashier to give the person 375 pennies but 3 1 dollar bills and 3 quarters
-#	Last part of the problem: account for "corner cases" like the item costs 6.25 and the user only gives cashier 5.75.
+# Author: Robert Katz
+# Version: 0.2, python 2.7.12
+# Program description: Designed to be run from the cammand line. The purpose of this program is to compute change, give the proper bill breakdown.
+# Input parameters:  1. Cost of the item 2. Amount paid.
+# output: proper denomination breakdown
+# Revision history:
+##  8-27-16:  initial commit
+##  8-28-16:  fix decimal/float/int-related currency issues, added notation
+# next step: deploying datatype decimal to address currency issue
 
-# DESIGNED TO BE RUN FROM THE COMMAND LINE
-# I think it works OK. I only have a problem controlling decimal places -
-# put 6.25 in as the cost of the item
-# and 7.24 in as the amount given to the cashier and you see what I mean.
+# captures cost, converts to # of cents by
+##cost = raw_input("What is the cost of the item? $")
+##money = raw_input("How much are you gving the cashier? $")
 
-cost = float(raw_input("What is the cost of the item? $"))
-#print "The item cost $%r" % cost
-
-money = float(raw_input("How much are you gving the cashier? $"))
-#print "I gave the cashier $%r" % money
-from decimal import *
-getcontext().prec = 2
 def change(cost,money):
-#	cost = decimal(raw_input("What is the cost of the item? $"))
-#	money = decimal(raw_input("How much are you gving the cashier? $"))
-#	returned_money = money - cost
-#	print "The cashier gave me $%r" % returned_money
 	if cost>money:
 		print "Whoops. You did not give the cashier enough money."
 		quit()
-	else:
-		pass
-	return money - cost
+	else: ##
+		# converts to # of cents - but need original value for printing purposes
+		cost_cents = int(100*cost)
+		money_cents = int(money*100)
+	return (float(money_cents) - float(cost_cents))/100
 
-#cost = 6.25
-#money = 7.24
+## use for test cases
+## cost = 6.25 ##
+## money = 7.24 ##
 
+## use to get input from user
+cost = float(raw_input("What is the cost of the item? $")) ##
+money = float(raw_input("How much are you gving the cashier? $"))
 print "I paid $%r for something that cost $%r" % (money,cost)
 print "The cashier returned $%r to me." % change(cost,money)
 
-#temp = change(6.25,20)
-returned_money = change(cost,money)
+returned_money = int(change(cost,money) *100)
 # check if 100s are required in returned_money
-hundreds = int(returned_money // 100.0)
+# the purpose for the multple conditions is multiple/singular bills/bill etc
+hundreds = int(returned_money // 10000.0)
 if hundreds > 1:
 	print "%r hundred-dollar bills" % hundreds
-	returned_money = returned_money - (hundreds * 100)
+	returned_money = returned_money - (hundreds * 10000)
 elif hundreds == 1:
 	print "%r hundred-dollar bill" % hundreds
-	returned_money = returned_money - (hundreds * 100)
+	returned_money = returned_money - (hundreds * 10000)
 else:
 	pass
 
 # check if 20s are required in returned_money
-twenties = int(returned_money // 20.0)
+twenties = int(returned_money // 2000.0)
 if twenties > 1:
 	print "%r twenty-dollar bills" % twenties
-	returned_money = returned_money - (twenties * 20)
-
+	returned_money = returned_money - (twenties * 2000)
 elif twenties == 1:
 	print "%r twenty-dollar bill" % twenties
-	returned_money = returned_money - (twenties * 20)
-
+	returned_money = returned_money - (twenties * 2000)
 else:
 	pass
 
 # check if 10s are required in returned_money
-tens = int(returned_money // 10.0)
+tens = int(returned_money // 1000.0)
 if tens > 1:
 	print "%r ten-dollar bills" % tens
-	returned_money = returned_money - (tens * 10)
-
+	returned_money = returned_money - (tens * 1000)
 elif tens == 1:
 	print "%r ten-dollar bill" % tens
-	returned_money = returned_money - (tens * 10)
-
+	returned_money = returned_money - (tens * 1000)
 else:
 	pass
 
 # check if 5s are required in returned_money
-fives = int(returned_money // 5.0)
+fives = int(returned_money // 500.0)
 if fives > 1:
 	print "%r five-dollar bills" % fives
-	returned_money = returned_money - (fives * 5.0)
-
+	returned_money = returned_money - (fives * 500.0)
 elif fives == 1:
-	print "%r fives-dollar bill" % fives
-	returned_money = returned_money - (fives * 5.0)
-
+	print "%r five-dollar bill" % fives
+	returned_money = returned_money - (fives * 500.0)
 else:
 	pass
 
 # check if singles are required in returned_money
-singles = int(returned_money // 1.0)
+singles = int(returned_money // 100.0)
 if singles > 1:
 	print "%r singles" % singles
-	returned_money = returned_money - (singles * 1)
-
+	returned_money = returned_money - (singles * 100)
 elif singles == 1:
 	print "%r single" % singles
-	returned_money = returned_money - (singles * 1)
-
+	returned_money = returned_money - (singles * 100)
 else:
 	pass
 
 # check if quarters are required in returned_money
-quarters = int(returned_money // 0.25)
+quarters = int(returned_money // 25)
 if quarters > 1:
 	print "%r quarters" % quarters
-	returned_money = returned_money - (quarters * 0.25)
-
+	returned_money = returned_money - (quarters * 25)
 elif quarters == 1:
 	print "%r quarter" % quarters
-	returned_money = returned_money - (quarters * 0.25)
-
+	returned_money = returned_money - (quarters * 25)
 else:
 	pass
 
 # check if dimes are required in returned_money
-dimes = int(returned_money // 0.1)
+dimes = int(returned_money // 10)
 if dimes > 1:
 	print "%r dimes" % dimes
-	returned_money = returned_money - (dimes * 0.1)
-
+	returned_money = returned_money - (dimes * 10)
 elif dimes == 1:
 	print "%r dimes" % dimes
-	returned_money = returned_money - (dimes * 0.1)
-
+	returned_money = returned_money - (dimes * 10)
 else:
 	pass
 
 # check if nickels are required in returned_money
-nickels = int(returned_money // 0.05)
+nickels = int(returned_money // 5)
 if nickels > 1:
 	print "%r nickels" % nickels
-	returned_money = returned_money - (nickels * 0.05)
-
+	returned_money = returned_money - (nickels * 5)
 elif nickels == 1:
-	print "%r nickels" % nickels
-	returned_money = returned_money - (nickels * 0.05)
-
+	print "%r nickel" % nickels
+	returned_money = returned_money - (nickels * 5)
 else:
 	pass
 
-# check if nickels are required in returned_money
-pennies = int(returned_money // 0.01)
+# check if pennies are required in returned_money
+pennies = int(returned_money // 1)
 if pennies > 1:
 	print "%r pennies" % pennies
-	returned_money = returned_money - (pennies * 0.01)
-
+	returned_money = returned_money - (pennies * 1)
 elif pennies == 1:
-	print "%r pennies" % pennies
-	returned_money = returned_money - (pennies * 0.01)
-
+	print "%r penny" % pennies
+	returned_money = returned_money - (pennies * 1)
 else:
 	pass
-  
