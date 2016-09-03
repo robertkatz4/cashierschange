@@ -16,7 +16,7 @@ money = 10.17
 ## use to get input from user
 #cost = float(raw_input("What is the cost of the item? $"))
 #money = float(raw_input("How much are you giving the cashier? $"))
-print "I paid $%s for something that cost $%s" % (format(money,'.2f'),format(cost,'.2f'))
+print "You paid $%s for something that cost $%s" % (format(money,'.2f'),format(cost,'.2f'))
 
 # checks to make sure the user gave enough money to the cashier
 if cost>money:
