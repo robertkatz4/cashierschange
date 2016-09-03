@@ -1,5 +1,5 @@
 # Author: Robert Katz
-# Version: 0.3, python 2.7.12
+# Version: 0.1, python 2.7.12
 # Program description: Designed to be run from the cammand line. The purpose of this program is to compute change, give the proper bill breakdown.
 # Input parameters:  1. Cost of the item 2. Amount paid.
 # output: proper denomination breakdown
@@ -9,13 +9,10 @@
 ##  9-2-16:  shorten script
 # next step: deploying datatype decimal to address currency issue
 
-#cost = 10.50
-#money = 11.13
-
 ## use to get input from user
 cost = float(raw_input("What is the cost of the item? $")) ##
 money = float(raw_input("How much are you gving the cashier? $"))
-print "I paid $%r for something that cost $%r" % (money,cost)
+print "I paid $%s for something that cost $%s" % (format(money,'.2f'),format(cost,'.2f'))
 
 # checks to make sure the user gave enough money to the cashier
 if cost>money:
@@ -25,8 +22,9 @@ else:
 	pass
 
 # money in dollar terms
-returned_money = (money*100 - cost*100)/100
-print "The cashier returned $%r to me." % returned_money
+returned_money = (money - cost)
+print "The cashier returned $%s to me." % format(returned_money, '.2f')
+
 # money in cents terms, change given subtracted as each denomination is subtracted
 returned_money = returned_money * 100
 hundreds = int(returned_money // 10000)
@@ -47,5 +45,5 @@ nickels = int(returned_money // 5)
 returned_money = returned_money - (nickels * 5)
 pennies = int(returned_money // 1)
 returned_money = returned_money - (pennies * 1)
-
+# print results of domination check
 print "The change was:\n%r hundreds\n%r twenties\n%r tens\n%r fives\n%r singles\n%r quarters\n%r dimes\n%r nickles\n%r pennies" % (hundreds, twenties, tens, fives, singles, quarters, dimes, nickels, pennies)
