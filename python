@@ -7,15 +7,11 @@
 ##  8-27-16:  initial commit
 ##  8-28-16:  fix decimal/float/int-related currency issues, added notation
 ##  9-2-16:  shorten script
-##  9-2-16: debugging
-# next step: deploying datatype decimal to address currency issue
-
-cost = 9.98
-money = 10.17
+# next step: deploying datatype decimal to address currency issue, round up each returned_money value, possibly
 
 ## use to get input from user
-#cost = float(raw_input("What is the cost of the item? $"))
-#money = float(raw_input("How much are you giving the cashier? $"))
+cost = float(raw_input("What is the cost of the item? $"))
+money = float(raw_input("How much are you giving the cashier? $"))
 print "You paid $%s for something that cost $%s" % (format(money,'.2f'),format(cost,'.2f'))
 
 # checks to make sure the user gave enough money to the cashier
@@ -27,7 +23,7 @@ else:
 
 # money in dollar terms
 returned_money = (money - cost)
-print "The cashier returned $%s to me." % format(returned_money, '.2f')
+print "The cashier returned $%s to you." % format(returned_money, '.2f')
 
 # money in cents terms
 returned_money = returned_money * 100
