@@ -7,11 +7,15 @@
 ##  8-27-16:  initial commit
 ##  8-28-16:  fix decimal/float/int-related currency issues, added notation
 ##  9-2-16:  shorten script
+##  9-2-16: debugging
 # next step: deploying datatype decimal to address currency issue
 
+cost = 9.98
+money = 10.17
+
 ## use to get input from user
-cost = float(raw_input("What is the cost of the item? $")) ##
-money = float(raw_input("How much are you gving the cashier? $"))
+#cost = float(raw_input("What is the cost of the item? $"))
+#money = float(raw_input("How much are you giving the cashier? $"))
 print "I paid $%s for something that cost $%s" % (format(money,'.2f'),format(cost,'.2f'))
 
 # checks to make sure the user gave enough money to the cashier
@@ -25,8 +29,9 @@ else:
 returned_money = (money - cost)
 print "The cashier returned $%s to me." % format(returned_money, '.2f')
 
-# money in cents terms, change given subtracted as each denomination is subtracted
+# money in cents terms
 returned_money = returned_money * 100
+# check remainder, subtract denomination
 hundreds = int(returned_money // 10000)
 returned_money = returned_money - (hundreds * 10000)
 twenties = int(returned_money // 2000)
@@ -34,7 +39,7 @@ returned_money = returned_money - (twenties * 2000)
 tens = int(returned_money // 1000)
 returned_money = returned_money - (tens * 1000)
 fives = int(returned_money // 500)
-returned_money = returned_money - (fives * 500.)
+returned_money = returned_money - (fives * 500)
 singles = int(returned_money // 100)
 returned_money = returned_money - (singles * 100)
 quarters = int(returned_money // 25)
@@ -43,7 +48,7 @@ dimes = int(returned_money // 10)
 returned_money = returned_money - (dimes * 10)
 nickels = int(returned_money // 5)
 returned_money = returned_money - (nickels * 5)
-pennies = int(returned_money // 1)
-returned_money = returned_money - (pennies * 1)
+pennies = int(round(returned_money))
+
 # print results of domination check
 print "The change was:\n%r hundreds\n%r twenties\n%r tens\n%r fives\n%r singles\n%r quarters\n%r dimes\n%r nickles\n%r pennies" % (hundreds, twenties, tens, fives, singles, quarters, dimes, nickels, pennies)
